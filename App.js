@@ -1,9 +1,13 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset } from 'expo';
-import AppNavigator from './navigation/AppNavigator';
 import { Provider } from 'react-redux';
 import store from './store'
+import CustomStatusBar from './components/CustomStatusBar';
+import AppNavigator from './navigation/AppNavigator';
+import { purple } from './utils/colors';
+
+
 
 export default class App extends React.Component {
   state = {
@@ -24,7 +28,7 @@ export default class App extends React.Component {
       return (
         <Provider store={store}>
           <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <CustomStatusBar backgroundColor={purple} barStyle='light-content' />
             <AppNavigator />
           </View>
         </Provider>
