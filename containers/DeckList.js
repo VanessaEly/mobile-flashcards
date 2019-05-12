@@ -1,10 +1,11 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux'
 import { fetchDecks } from '../utils/api';
 import { receiveDecks } from '../actions/decks'
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import DeckCard from '../components/deck/DeckCard';
 
 class DeckList extends React.Component {
   // hiding the navigation header
@@ -26,7 +27,7 @@ class DeckList extends React.Component {
 
   render() {
     const { ready } = this.state;
-    const { decks } = this.props;
+    const { decks, navigation } = this.props;
     
     if (ready === false) {
       return <ActivityIndicator style={{marginTop: 30}} />
@@ -36,13 +37,11 @@ class DeckList extends React.Component {
       <View style={styles.container}>
         <Header />
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.getStartedContainer}>
-            {Object.keys(decks).map((key) => (
-              <Text key={key} style={styles.baseText}>
-                {key}
-              </Text>
-            ))}
-          </View>
+          {Object.keys(decks).map(id => (
+            <TouchableOpacity key={id} onPress={() => navigation.navigate('DeckDetails', { id })}>
+              <DeckCard key={id} {...decks[id]} />
+            </TouchableOpacity>
+          ))}
         </ScrollView>
         <Footer />
       </View>
@@ -55,19 +54,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  baseText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
-  },
   contentContainer: {
     paddingTop: 30,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
   },
 });
 
