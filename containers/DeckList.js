@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View, ActivityIndicator } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, FlatList, View, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux'
 import { fetchDecks } from '../utils/api';
 import { receiveDecks } from '../actions/decks'
@@ -25,23 +25,38 @@ class DeckList extends React.Component {
       .then(() => this.setState(() => ({ready: true})))
   }
 
+  renderItem = ({item, index}) => {
+    const { navigation } = this.props;
+    
+    return (
+      <TouchableOpacity onPress={() => navigation.navigate('DeckDetails', { index, id: item.key })}>
+        <DeckCard index={index} {...item} />
+      </TouchableOpacity>
+    )
+  }
+
   render() {
     const { ready } = this.state;
-    const { decks, navigation } = this.props;
+    const { decks } = this.props;
     
+
     if (ready === false) {
       return <ActivityIndicator style={{marginTop: 30}} />
     }
+
+    const data = Object.keys(decks).map((key) => {
+      return { key, ...decks[key] }
+    });
 
     return (
       <View style={styles.container}>
         <Header />
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          {Object.keys(decks).map(id => (
-            <TouchableOpacity key={id} onPress={() => navigation.navigate('DeckDetails', { id })}>
-              <DeckCard key={id} {...decks[id]} />
-            </TouchableOpacity>
-          ))}
+          <FlatList
+            data={data}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={this.renderItem}
+          />
         </ScrollView>
         <Footer />
       </View>
@@ -55,7 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   contentContainer: {
-    paddingTop: 30,
+    paddingTop: 20,
   },
 });
 

@@ -1,26 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Platform } from 'react-native';
+import { StyleSheet, View, Text, Platform } from 'react-native';
 import { connect } from "react-redux";
-import { Ionicons } from '@expo/vector-icons';
-import { lightGray, purple, white } from "../../utils/colors";
+import { getColor, purple, white } from "../../utils/colors";
+import CustomTouchable from '../CustomTouchable';
 
 class DeckDetails extends Component {
-  onAddCardPress(id) {
-    this.props.navigation.navigate("AddCard", {
-      deckId : id
-    });
-  }
-
-  startQuiz(id) {
-    this.props.navigation.navigate("Quiz", {
-      deckId : id
-    });
-  }
-
-  onDeleteDeckPress(id) {
-    this.props.deleteDeck(id);
-  }
-
   componentWillReceiveProps(nextProps){
     if(!nextProps.deck){
       this.props.navigation.goBack();
@@ -28,43 +12,30 @@ class DeckDetails extends Component {
   }
   
   render() {
-    const { deck, navigation } = this.props;
-    const { id } = navigation.state.params;
+    const { deck, navigation, deleteDeck } = this.props;
+    const { id, index } = navigation.state.params;
 
     if(deck){
       return (
-        <View style={styles.container}>
+        <View style={[styles.container, {backgroundColor: getColor(index)}]}>
           <Text style={styles.deckTitle}>{deck.title}</Text>
           <Text style={styles.deckCardCount}>{deck.questions.length} cards</Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("StartQuiz", { id })}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Start Quiz</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.iconContainer, {backgroundColor: purple}]}>
-            <Ionicons
-              name={Platform.OS === 'ios' ? 'ios-add' : 'md-add'}
-              color={white}
-              size={25}
-            />
-            <Text>Add Card</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.iconContainer, {backgroundColor: purple}]}>
-            <Ionicons
-              name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
-              color={white}
-              size={25}
-            />
-            <Text>Remove Deck</Text>
-          </TouchableOpacity>
+          <CustomTouchable
+            onPress={() => navigation.navigate('StartQuiz', { id })}
+            title='Start Quiz'
+            icon={Platform.OS === 'ios' ? 'ios-play-circle' : 'md-play-circle'}
+          />
+          <CustomTouchable
+            onPress={() => navigation.navigate('AddCard', { id })}
+            title='Add Card'
+            icon={Platform.OS === 'ios' ? 'ios-add' : 'md-add'}
+          />
+          <CustomTouchable
+            onPress={() => deleteDeck(id)}
+            title='Remove Deck'
+            icon={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
+          />
         </View>
-        // <TouchableOpacity style={styles.btn} onPress={()=> this.onAddCardPress(deck.id) } bordered block >
-        //     <Text style={{color: lightGray}}>Add Card</Text>
-        // </TouchableOpacity>
-        // <TouchableOpacity style={styles.btn} onPress={()=> this.onDeleteDeckPress(deck.id) } transparent danger block >
-        //     <Text>Delete Deck</Text>
-        // </TouchableOpacity>
       );
     }
     else {
@@ -76,7 +47,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: lightGray,
   },
   deckTitle: {
     fontSize: 35,

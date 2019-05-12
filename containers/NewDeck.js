@@ -1,15 +1,9 @@
 import React from 'react';
 import { ScrollView, Text, StyleSheet } from 'react-native';
-import { white, purple } from '../utils/colors';
+import { getNavigationOptions } from '../utils/shared';
 
 export default class NewDeck extends React.Component {
-  static navigationOptions = {
-    title: 'New Deck',
-    headerTintColor: white,
-    headerStyle: {
-      backgroundColor: purple,
-    }
-  };
+  static navigationOptions = getNavigationOptions('New Deck')
 
   render() {
     return (

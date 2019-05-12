@@ -6,30 +6,18 @@ import DeckList from '../containers/DeckList';
 import NewDeck from '../containers/NewDeck';
 import DeckDetails from '../components/deck/DeckDetails';
 import StartQuiz from '../components/deck/StartQuiz';
-import { white, purple } from '../utils/colors';
+import { getNavigationOptions } from '../utils/shared';
 
 const DeckListStack = createStackNavigator({
   DeckList: DeckList,
   DeckDetails: {
     screen: DeckDetails,
-    navigationOptions: {
-      title: 'Deck Details',
-      headerTintColor: white,
-      headerStyle: {
-        backgroundColor: purple,
-      }
-    }
+    navigationOptions: getNavigationOptions('Deck Details'),
   },
   StartQuiz: {
     screen: StartQuiz,
-    navigationOptions: {
-      title: 'Start Quiz',
-      headerTintColor: white,
-      headerStyle: {
-        backgroundColor: purple,
-      }
-    }
-  },
+    navigationOptions: getNavigationOptions('Start Quiz'),
+  }
 });
 
 DeckListStack.navigationOptions = {

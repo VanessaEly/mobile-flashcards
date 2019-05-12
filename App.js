@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { AppLoading, Asset } from 'expo';
 import { Provider } from 'react-redux';
 import store from './store'
@@ -28,7 +28,7 @@ export default class App extends React.Component {
       return (
         <Provider store={store}>
           <View style={styles.container}>
-            <CustomStatusBar backgroundColor={purple} barStyle='light-content' />
+            <CustomStatusBar backgroundColor='black' barStyle='light-content' />
             <AppNavigator />
           </View>
         </Provider>
