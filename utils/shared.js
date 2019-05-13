@@ -1,9 +1,9 @@
-import { darkGray, white } from './colors';
+import { white } from './colors';
 
 export const getNavigationOptions = (title) => ({
   title: title,
-  headerTintColor: white,
+  headerTintColor: 'black',
   headerStyle: {
-    backgroundColor: darkGray,
+    backgroundColor: white,
   }
 });

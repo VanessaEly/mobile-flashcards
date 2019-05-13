@@ -5,7 +5,7 @@ import { fetchDecks } from '../utils/api';
 import { receiveDecks } from '../actions/decks'
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import DeckCard from '../components/deck/DeckCard';
+import DeckContent from '../components/deck/DeckContent';
 
 class DeckList extends React.Component {
   // hiding the navigation header
@@ -30,7 +30,7 @@ class DeckList extends React.Component {
     
     return (
       <TouchableOpacity onPress={() => navigation.navigate('DeckDetails', { index, id: item.key })}>
-        <DeckCard index={index} {...item} />
+        <DeckContent index={index} {...item} />
       </TouchableOpacity>
     )
   }
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   contentContainer: {
-    paddingTop: 20,
+    paddingTop: 5,
   },
 });
 

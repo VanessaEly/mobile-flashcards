@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Platform } from 'react-native';
-import { connect } from "react-redux";
-import { getColor, purple, white } from "../../utils/colors";
+import { connect } from 'react-redux';
+import { getColor, darkGray, darkBlue, darkRed, lightBlue } from '../../utils/colors';
 import CustomTouchable from '../CustomTouchable';
 
 class DeckDetails extends Component {
@@ -17,24 +17,36 @@ class DeckDetails extends Component {
 
     if(deck){
       return (
-        <View style={[styles.container, {backgroundColor: getColor(index)}]}>
-          <Text style={styles.deckTitle}>{deck.title}</Text>
-          <Text style={styles.deckCardCount}>{deck.questions.length} cards</Text>
-          <CustomTouchable
-            onPress={() => navigation.navigate('StartQuiz', { id })}
-            title='Start Quiz'
-            icon={Platform.OS === 'ios' ? 'ios-play-circle' : 'md-play-circle'}
-          />
-          <CustomTouchable
-            onPress={() => navigation.navigate('AddCard', { id })}
-            title='Add Card'
-            icon={Platform.OS === 'ios' ? 'ios-add' : 'md-add'}
-          />
-          <CustomTouchable
-            onPress={() => deleteDeck(id)}
-            title='Remove Deck'
-            icon={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
-          />
+        <View style={styles.container}>
+          <View style={[styles.deck, {backgroundColor: getColor(index)}]}>
+            <Text style={styles.title}>{deck.title}</Text>
+            <Text style={[styles.cardCount, {color: darkGray}]}>{deck.questions.length} cards</Text>
+            
+          </View>
+          <View style={styles.buttonContainer}>
+            {deck.questions.length > 0 && (
+              <CustomTouchable
+                backgroundColor={darkBlue}
+                onPress={() => navigation.navigate('Quiz', { index, id })}
+                title='Start Quiz'
+                icon={Platform.OS === 'ios' ? 'ios-play-circle' : 'md-play-circle'}
+              />
+            )}
+          </View>
+          <View style={styles.buttonContainer}>
+            <CustomTouchable
+              backgroundColor={darkRed}
+              onPress={() => deleteDeck(id)}
+              title='Remove Deck'
+              icon={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
+            />
+            <CustomTouchable
+              backgroundColor={lightBlue}
+              onPress={() => navigation.navigate('AddCard', { id })}
+              title='Add Card'
+              icon={Platform.OS === 'ios' ? 'ios-add' : 'md-add'}
+            />
+          </View>
         </View>
       );
     }
@@ -45,36 +57,34 @@ class DeckDetails extends Component {
 }
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1,
+    backgroundColor: 'transparent',
   },
-  deckTitle: {
+  deck: {
+    flex: 5,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginTop: 15,
+    marginBottom: 5,
+    marginHorizontal: 15,
+    borderRadius: 10,
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+  },
+  title: {
+    borderBottomWidth: 1,
     fontSize: 35,
-    fontWeight:"bold",
-    marginBottom: 40
+    fontWeight: 'bold',
   },
-  deckCardCount: {
-    fontSize: 30,
-    marginBottom: 40
+  cardCount: {
+    fontSize: 25,
   },
-  button: {
-    backgroundColor: purple,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40,
-  },
-  buttonText: {
-    color: white,
-    fontSize: 22,
-    textAlign: 'center',
-  },
-  iconContainer: {
-    padding: 10, 
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 });
 

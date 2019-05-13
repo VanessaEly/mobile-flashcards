@@ -5,7 +5,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import DeckList from '../containers/DeckList';
 import NewDeck from '../containers/NewDeck';
 import DeckDetails from '../components/deck/DeckDetails';
-import StartQuiz from '../components/deck/StartQuiz';
+import Quiz from '../components/deck/Quiz';
 import { getNavigationOptions } from '../utils/shared';
 
 const DeckListStack = createStackNavigator({
@@ -14,9 +14,9 @@ const DeckListStack = createStackNavigator({
     screen: DeckDetails,
     navigationOptions: getNavigationOptions('Deck Details'),
   },
-  StartQuiz: {
-    screen: StartQuiz,
-    navigationOptions: getNavigationOptions('Start Quiz'),
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: getNavigationOptions('Quiz'),
   }
 });
 

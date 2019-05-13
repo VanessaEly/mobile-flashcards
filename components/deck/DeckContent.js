@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { lightGray, getColor } from '../../utils/colors';
+import { darkGray, getColor } from '../../utils/colors';
 
-const DeckCard = (props) => {
+const DeckContent = (props) => {
   const { index, title, questions } = props;
 
   return (
@@ -10,7 +10,7 @@ const DeckCard = (props) => {
       <Text style={styles.title}>
         {title}
       </Text>
-      <Text style={styles.subtitle}>
+      <Text style={[styles.subtitle, {color: darkGray}]}>
         {questions.length} Cards
       </Text>
     </View>
@@ -25,10 +25,10 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 10,
     alignItems: 'center',
+    elevation: 5,
     shadowColor: 'black',
-    shadowOffset: { height: -3 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
   },
   title: {
     fontWeight: 'bold',
@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DeckCard;
+export default DeckContent;
