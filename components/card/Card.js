@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Platform, Animated } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { getColor, darkRed, lightBlue, darkGray } from '../../utils/colors';
+import { View, StyleSheet, Platform, Animated } from 'react-native';
+import { getColor, darkRed, lightBlue } from '../../utils/colors';
 import CustomTouchable from '../CustomTouchable';
+import CardDetails from './CardDetails';
 
 export default class Card extends React.Component {
   state = {
@@ -11,15 +11,18 @@ export default class Card extends React.Component {
     rotate: new Animated.Value(0),
   }
   flipCard = () => {
-    console.log('flip')
-    const { isFlipped } = this.state
-    Animated.spring(this.state.rotate, {
-      friction: 6,
-      tension: 20,
+    const { isFlipped, rotate } = this.state;
+
+    Animated.timing(rotate, {
+      friction: 8,
+      tension: 50,
       useNativeDriver: true,
-      toValue: isFlipped ? 0 : 180,
+      toValue: isFlipped ? 0 : 1,
     }).start();
-    this.setState({ isFlipped: !isFlipped} );
+
+    setTimeout(() => {
+      this.setState({isFlipped: !isFlipped})
+    }, 10);
   }
   render() {
     const { deckIndex, card, displayCard } = this.props;
@@ -31,24 +34,20 @@ export default class Card extends React.Component {
 
     return (
       <View style={styles.cardContainer}>  
-        <Animated.View style={[styles.deck, {backgroundColor: getColor(deckIndex), transform: [{rotateY: this.state.rotate.interpolate({inputRange: [0, 1],  outputRange: [ '0deg', '180deg' ]})},]}]}>
+        <Animated.View  style={[styles.deck, {backgroundColor: getColor(deckIndex), transform: [{rotateY: this.state.rotate.interpolate({inputRange: [0, 1],  outputRange: [ '0deg', '180deg' ]})},]}]}>
         {!isFlipped && (
-          <TouchableOpacity onPress={this.flipCard}>
-            <Text style={styles.title}>{card.question}</Text>
-            <View style={styles.cardFrontButtonContainer}>
-              <Ionicons
-                style={styles.cardFrontButtonIcon}
-                onPress={this.flip}
-                name={Platform.OS === 'ios' ? 'ios-swap' : 'md-swap'}
-                size={24} />
-              <Text style={styles.cardFrontButtonText}>Show Answer</Text>
-            </View>
-          </TouchableOpacity>
+          <CardDetails
+            onPress={() => this.flipCard()}
+            cardText={card.question}
+            buttonText='Show Answer'
+            scaleX={1} />
         )}
         {isFlipped && (
-          <TouchableOpacity onPress={this.flipCard}>
-            <Text>Oi</Text>
-          </TouchableOpacity>
+          <CardDetails
+            onPress={() => this.flipCard()}
+            cardText={card.answer}
+            buttonText='Show Question'
+            scaleX={-1} />
         )}
         </Animated.View>
         <View style={styles.choices}>
@@ -56,14 +55,12 @@ export default class Card extends React.Component {
             backgroundColor={darkRed}
             onPress={() => navigation.navigate('AddCard', { id })}
             title='Incorrect'
-            icon={Platform.OS === 'ios' ? 'ios-add' : 'md-add'}
-          />
+            icon={Platform.OS === 'ios' ? 'ios-close' : 'md-close'} />
           <CustomTouchable
             backgroundColor={lightBlue}
             onPress={() => navigation.navigate('AddCard', { id })}
             title='Correct'
-            icon={Platform.OS === 'ios' ? 'ios-add' : 'md-add'}
-          />
+            icon={Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark'} />
         </View>
       </View>
     );
@@ -73,46 +70,28 @@ export default class Card extends React.Component {
 const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
-    backgroundColor: 'transparent',
   },
   deck: {
-    flex: 5,
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    flex: 3,
+    borderRadius: 10,
     marginVertical: 15,
     marginHorizontal: 15,
-    borderRadius: 10,
-    elevation: 5,
+    justifyContent: 'space-around',
+    justifyContent: 'center',
+    shadowRadius: 0,
+    shadowOpacity: 0.8,
     shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-  },
-  title: {
-    fontSize: 25,
-    fontWeight: 'bold',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    transform: [
+      { perspective: 1000 }
+    ],
   },
   choices: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between'
-  },
-  cardFrontButtonContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  cardFrontButtonIcon: {
-    width: 24,
-    flex: 1,
-    maxWidth: 24,
-    color: darkGray,
-  },
-  cardFrontButtonText: {
-    fontSize: 17,
-    flex: 10,
-    maxWidth: 130,
-    paddingLeft: 5,
-    color: darkGray,
   },
 });

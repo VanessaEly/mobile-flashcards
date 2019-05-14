@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import store from './store'
 import CustomStatusBar from './components/CustomStatusBar';
 import AppNavigator from './navigation/AppNavigator';
-import { purple } from './utils/colors';
 
 
 

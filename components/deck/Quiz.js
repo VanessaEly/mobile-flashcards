@@ -14,7 +14,9 @@ class Quiz extends React.Component {
 
     return (
       <View style={styles.container}>
-          <Text>{currentCard + 1}/{deck.questions.length}</Text>
+          <View style={styles.header}>
+            <Text style={styles.cardCounter}>Question {currentCard + 1}/{deck.questions.length}</Text>
+          </View>
           {deck.questions.map((card, key) => (
             <Card
               deckIndex={index}
@@ -33,6 +35,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
   },
+  header: {
+    marginTop: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cardCounter: {
+    padding: 5,
+  }
 });
 
 const mapStateToProps = ({decks}, props) => {
