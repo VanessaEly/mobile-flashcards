@@ -1,8 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, FlatList, View, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux'
-import { fetchDecks } from '../utils/api';
-import { receiveDecks } from '../actions/decks'
+import { getDecks } from '../actions/decks';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import DeckContent from '../components/deck/DeckContent';
@@ -12,19 +11,11 @@ class DeckList extends React.Component {
   static navigationOptions = {
     header: null,
   };
-
-  state ={
-    ready: false,
-  }
-
-  componentDidMount () {
-    const { dispatch } = this.props
+  componentDidMount() {
+    const { getAllDecks } = this.props
     //receiving our decks
-    fetchDecks()
-      .then((decks) => dispatch(receiveDecks(decks)))
-      .then(() => this.setState(() => ({ready: true})))
+    getAllDecks();
   }
-
   renderItem = ({item, index}) => {
     const { navigation } = this.props;
     
@@ -34,13 +25,10 @@ class DeckList extends React.Component {
       </TouchableOpacity>
     )
   }
-
   render() {
-    const { ready } = this.state;
     const { decks } = this.props;
-    
 
-    if (ready === false) {
+    if (!decks) {
       return <ActivityIndicator style={{marginTop: 30}} />
     }
 
@@ -51,7 +39,7 @@ class DeckList extends React.Component {
     return (
       <View style={styles.container}>
         <Header />
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <ScrollView contentContainerStyle={styles.contentContainer}>
           <FlatList
             data={data}
             keyExtractor={(item, index) => index.toString()}
@@ -78,5 +66,11 @@ const styles = StyleSheet.create({
 function mapStateToProps (decks) {
   return decks;
 }
+
+const mapDispatchToProps = dispatch => ({
+  getAllDecks: () => {
+    dispatch(getDecks());
+  },
+});
 // connecting to get access to dispatch
-export default connect(mapStateToProps)(DeckList)
+export default connect(mapStateToProps, mapDispatchToProps)(DeckList)

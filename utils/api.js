@@ -16,7 +16,7 @@ const getInitialData = () => (
         {
           question: 'Where do you make Ajax requests in React?',
           answer: 'The componentDidMount lifecycle event'
-        }
+        },
       ]
     },
     JavaScript: {
@@ -135,25 +135,30 @@ const getInitialData = () => (
 export const fetchDecks = () => {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY)
     .then(response => JSON.parse(response))
-      .then(response => {
-        return response !== null
-          ? response
-          : getInitialData()
+      .then(data => {
+        if (data !== null) {
+          return data;
+        }
+        else {
+          AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(getInitialData()))
+          return getInitialData();
+        }
   });
 }
 export const submitEntry = ({ entry, key }) => {
   // merge the entry received into the asyncStorage key that was passed
-  return AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify({
+  return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
     [key]: entry
   }));
 }
 
-export const removeEntry = (key) => {
+export const removeDeckById = (key) => {
   // search for and remove item with that key from the asyncStorage
-  return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY).then((results) => {
-    const data = JSON.parse(results);
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+  .then(response => JSON.parse(response))
+  .then(data => {
     data[key] = undefined;
     delete data[key];
-    AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(data));
+    AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
   });
 } 

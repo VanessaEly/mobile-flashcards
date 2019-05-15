@@ -6,8 +6,6 @@ import store from './store'
 import CustomStatusBar from './components/CustomStatusBar';
 import AppNavigator from './navigation/AppNavigator';
 
-
-
 export default class App extends React.Component {
   state = {
     appLoaded: false,

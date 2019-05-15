@@ -18,13 +18,13 @@ class Quiz extends React.Component {
     }));
   }
   restartQuiz = () => {
-    console.log('restarting')
+    this.setState({ currentCard: 0, correctAnswers: 0 });
   }
   getScore () {
     const { correctAnswers } = this.state;
     const { deck } = this.props;
 
-    return Number(Math.round(correctAnswers/deck.questions.length) * 100).toFixed(2);
+    return Math.round((correctAnswers/deck.questions.length)*100);
   }
   render() {
     const { deck, navigation } = this.props;

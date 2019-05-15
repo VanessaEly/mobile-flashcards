@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Platform } from 'react-native';
+import { StyleSheet, View, Text, Platform, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { getColor, darkGray, darkBlue, darkRed, lightBlue } from '../../utils/colors';
 import CustomTouchable from '../CustomTouchable';
+import { removeDeck } from '../../actions/decks';
 
 class DeckDetails extends Component {
   componentWillReceiveProps(nextProps){
@@ -10,9 +11,16 @@ class DeckDetails extends Component {
       this.props.navigation.goBack();
     }
   }
+  handleDeleteDeck = id => {
+    const { deleteDeck } = this.props;
+    Alert.alert('Are you sure?', 'This action cannot be undone',
+      [{ text: 'Cancel' }, { text: 'OK', onPress: () => deleteDeck(id) }],
+      { cancelable: false },
+    );
+  }
   
   render() {
-    const { deck, navigation, deleteDeck } = this.props;
+    const { deck, navigation } = this.props;
     const { id, index } = navigation.state.params;
 
     if(deck){
@@ -36,7 +44,7 @@ class DeckDetails extends Component {
           <View style={styles.buttonContainer}>
             <CustomTouchable
               backgroundColor={darkRed}
-              onPress={() => deleteDeck(id)}
+              onPress={() => this.handleDeleteDeck(id)}
               title='Remove Deck'
               icon={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
             />
@@ -99,7 +107,7 @@ const mapStateToProps = ({decks}, props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteDeck: (deckId) => {
-      dispatch(handleDeleteDeck(deckId));
+      dispatch(removeDeck(deckId));
     }
   };
 }
