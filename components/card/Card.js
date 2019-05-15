@@ -6,7 +6,6 @@ import CardDetails from './CardDetails';
 
 export default class Card extends React.Component {
   state = {
-    currentCard: 0,
     isFlipped: false,
     rotate: new Animated.Value(0),
   }
@@ -25,7 +24,7 @@ export default class Card extends React.Component {
     }, 10);
   }
   render() {
-    const { deckIndex, card, displayCard } = this.props;
+    const { deckIndex, card, displayCard, onAnswer } = this.props;
     const { isFlipped } = this.state;
 
     if (!displayCard) {
@@ -34,7 +33,7 @@ export default class Card extends React.Component {
 
     return (
       <View style={styles.cardContainer}>  
-        <Animated.View  style={[styles.deck, {backgroundColor: getColor(deckIndex), transform: [{rotateY: this.state.rotate.interpolate({inputRange: [0, 1],  outputRange: [ '0deg', '180deg' ]})},]}]}>
+        <Animated.View  style={[styles.card, {backgroundColor: getColor(deckIndex), transform: [{rotateY: this.state.rotate.interpolate({inputRange: [0, 1],  outputRange: [ '0deg', '180deg' ]})},]}]}>
         {!isFlipped && (
           <CardDetails
             onPress={() => this.flipCard()}
@@ -53,12 +52,12 @@ export default class Card extends React.Component {
         <View style={styles.choices}>
           <CustomTouchable
             backgroundColor={darkRed}
-            onPress={() => navigation.navigate('AddCard', { id })}
+            onPress={() => onAnswer(false)}
             title='Incorrect'
             icon={Platform.OS === 'ios' ? 'ios-close' : 'md-close'} />
           <CustomTouchable
             backgroundColor={lightBlue}
-            onPress={() => navigation.navigate('AddCard', { id })}
+            onPress={() => onAnswer(true)}
             title='Correct'
             icon={Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark'} />
         </View>
@@ -71,7 +70,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
   },
-  deck: {
+  card: {
     flex: 3,
     borderRadius: 10,
     marginVertical: 15,
