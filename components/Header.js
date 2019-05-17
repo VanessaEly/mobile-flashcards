@@ -16,10 +16,8 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     marginTop: 10,
-    borderRadius: 5,
-    borderColor: purple,
-    borderWidth: 1,
-    elevation: 2,
+    borderBottomColor: 'rgba(0, 0, 0, 0.2)',
+    borderBottomWidth: 1,
     marginLeft: 5,
     marginRight: 5,
   },

@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical: 15,
     marginHorizontal: 15,
-    justifyContent: 'space-around',
     justifyContent: 'center',
     shadowRadius: 0,
     shadowOpacity: 0.8,

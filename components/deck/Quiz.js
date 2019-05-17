@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text, StyleSheet } from 'react-native';
+import * as Progress from 'react-native-progress';
 import Score from './Score';
 import Card from '../card/Card';
+import { darkBlue } from '../../utils/colors';
 
 class Quiz extends React.Component {
   state = {
@@ -44,7 +46,8 @@ class Quiz extends React.Component {
               />
             ) : (
               <View style={styles.header}>
-                <Text style={styles.cardCounter}>Question {currentCard + 1}/{deck.questions.length}</Text>
+              <Text style={styles.progressText}>{currentCard + 1}/{deck.questions.length}</Text>
+                <Progress.Bar color={darkBlue} progress={((currentCard + 1)/deck.questions.length)} width={200}/>
               </View>
             )
           }
@@ -74,6 +77,11 @@ const styles = StyleSheet.create({
   },
   cardCounter: {
     padding: 5,
+  },
+  progressText: {
+    color: darkBlue,
+    fontSize: 18,
+    lineHeight: 18
   }
 });
 
