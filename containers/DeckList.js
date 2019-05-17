@@ -28,7 +28,7 @@ class DeckList extends React.Component {
   render() {
     const { decks } = this.props;
 
-    if (!decks) {
+    if (Object.keys(decks).length === 0) {
       return <ActivityIndicator style={{marginTop: 30}} />
     }
 

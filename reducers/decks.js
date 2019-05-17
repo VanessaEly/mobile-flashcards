@@ -1,6 +1,6 @@
 import { RECEIVE_DECKS, ADD_DECK, DELETE_DECK } from '../actions/types';
 
-const decks = (state = null, action) => {
+const decks = (state = {}, action) => {
   switch(action.type) {
     case RECEIVE_DECKS:
       // when decks are received, merge the current state with the decks returned

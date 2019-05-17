@@ -145,10 +145,10 @@ export const fetchDecks = () => {
         }
   });
 }
-export const submitEntry = ({ entry, key }) => {
-  // merge the entry received into the asyncStorage key that was passed
+export const saveDeckTitle = ({ id, deck }) => {
+  // merge the deck received into the asyncStorage key that was passed
   return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
-    [key]: entry
+    [id]: deck
   }));
 }
 

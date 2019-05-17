@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView  } from 'react-native'
 import { connect } from 'react-redux'
-import { getNavigationOptions, generateId } from '../utils/shared';
+import { saveDeck } from '../actions/decks';
+import { generateId } from '../utils/shared';
 import { lightBlue, darkBlue } from '../utils/colors';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -17,54 +18,51 @@ class NewDeckScreen extends Component {
   }
 
   submit = () => {
-    const { title } = this.state
-    const { addDeck, navigation } = this.props
+    const { title } = this.state;
+    const { addDeck, navigation } = this.props;
 
     if (title.length === 0) {
       alert('Please fill title field')
-      return
+      return;
     }
 
-    const deck = {id : generateId(), title : title, questions: []}
-    addDeck(deck)
-    this.reset()
-    navigation.navigate('DeckViewScreen', {id: deck.id, title: deck.title})
-  }
-
-  reset = () => {
-    this.setState({
-      title: '',
-    })
+    const deck = { title, questions: [] };
+    const id = generateId();
+    addDeck(id, deck);
+    this.setState({ title: '' });
+    navigation.navigate('DeckDetails', { id })
   }
 
   render() {
     return (
-      <KeyboardAvoidingView  style={styles.container} behavior="padding">
+      <View  style={styles.container}>
         <Header />
-        <View style={styles.deck}>
+        <KeyboardAvoidingView style={styles.deck} behavior="padding">
           <View style={styles.deckContent}>
-            <View style={styles.deckBlock}>
-              <Text style={styles.deckTitle}>What is the title of your new deck?</Text>
+            <View style={[styles.deckBlock, styles.title]}>
+              <Text style={{fontWeight: 'bold', fontSize: 18}}>Create Deck</Text>
+              <Text style={{fontSize: 15}}>What is the title of your new deck?</Text>
             </View>
             <View style={styles.deckBlock}>
               <TextInput
-                style={styles.deckInput}
+                style={styles.input}
                 placeholder={'Deck Title'}
-                onChangeText={(text) => this.setState({title: text})}
+                onChangeText={(text) => this.setState({ title: text })}
                 value={this.state.title}
               />
             </View>
-            <View style={{flex: .4}}>
+            <View style={{flex: .5}}>
               <CustomTouchable
               backgroundColor={darkBlue}
-              // onPress={onRestart}
+              onPress={this.submit}
               title='Submit' />
             </View>
-            
           </View>
+        </KeyboardAvoidingView>
+        <View style={styles.footer}>
+          <Footer />
         </View>
-        <Footer />
-      </KeyboardAvoidingView>
+      </View>
     )
   }
 }
@@ -76,10 +74,10 @@ const styles = StyleSheet.create({
   deck: {
     flexDirection: 'row',
     flex: 1,
-    margin: 15,
+    top: 30,
+    marginHorizontal: 15,
     backgroundColor: lightBlue,
     borderRadius: 16,
-    padding: 10,
     alignItems: 'center',
     elevation: 5,
     shadowColor: 'black',
@@ -90,36 +88,35 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     textAlign: 'center',
-    paddingTop: 10,
     paddingHorizontal: 15,
   },
   deckBlock: {
     flex: 1,
     justifyContent: 'center',
-    textAlign: 'center',
   },
-  deckTitle: {
-    backgroundColor: 'pink',
-    fontSize: 18,
-    lineHeight: 20,
-  },
-  deckInput: {
+  input: {
     backgroundColor: 'white',
     borderColor: darkBlue,
     borderWidth: 1,
     height: 38,
     borderRadius: 4,
+    padding: 10,
+    textAlign: 'center',
+  },
+  title: {
+    alignItems: 'center',
+    color: darkBlue,
   },
   footer: {
-    flex: 1,
+    flex: .5,
     justifyContent: 'flex-end',
   }
 })
 
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
   return {
-    addDeck : (deck) => dispatch(addDeck(deck)),
+    addDeck : (id, deck) => dispatch(saveDeck(id, deck)),
   }
 }
 

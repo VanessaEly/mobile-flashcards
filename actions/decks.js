@@ -1,5 +1,5 @@
 import { RECEIVE_DECKS, ADD_DECK, DELETE_DECK } from './types';
-import { fetchDecks, removeDeckById } from '../utils/api';
+import { fetchDecks, removeDeckById, saveDeckTitle } from '../utils/api';
 
 const receiveDecks = (decks) => ({
   type: RECEIVE_DECKS,
@@ -21,8 +21,13 @@ export const getDecks = () => dispatch => fetchDecks()
     dispatch(receiveDecks(decks));
   });
 
-  export const removeDeck = (id) => dispatch => removeDeckById(id)
+export const removeDeck = (id) => dispatch => removeDeckById(id)
   .then(() => {
     dispatch(deleteDeck(id));
+  });
+
+export const saveDeck = (id, deck) => dispatch => saveDeckTitle(id, deck)
+  .then(() => {
+    dispatch(addDeck({ [id]: deck }));
   });
   

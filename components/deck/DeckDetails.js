@@ -26,10 +26,9 @@ class DeckDetails extends Component {
     if(deck){
       return (
         <View style={styles.container}>
-          <View style={[styles.deck, {backgroundColor: getColor(index)}]}>
+          <View style={[styles.deck, {backgroundColor: getColor(index || 0)}]}>
             <Text style={styles.title}>{deck.title}</Text>
             <Text style={[styles.cardCount, {color: darkGray}]}>{deck.questions.length} cards</Text>
-            
           </View>
           <View style={styles.buttonContainer}>
             {deck.questions.length > 0 && (

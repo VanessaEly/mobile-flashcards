@@ -10,7 +10,6 @@ export default class Card extends React.Component {
   }
   componentDidMount() {
     const { score } = this.props;
-    console.log(score)
 
     setTimeout(() => {
       this.setState({ progress: score })

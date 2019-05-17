@@ -46,7 +46,7 @@ class Quiz extends React.Component {
               />
             ) : (
               <View style={styles.header}>
-              <Text style={styles.progressText}>{currentCard + 1}/{deck.questions.length}</Text>
+                <Text style={styles.progressText}>{currentCard + 1}/{deck.questions.length}</Text>
                 <Progress.Bar color={darkBlue} progress={((currentCard + 1)/deck.questions.length)} width={200}/>
               </View>
             )
