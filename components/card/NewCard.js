@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView  } from 'react-native'
 import { connect } from 'react-redux'
-import { saveDeck } from '../../actions/decks';
-import { generateId } from '../../utils/shared';
-import { lighterBlue, darkBlue } from '../../utils/colors';
+import { saveCardToDeck } from '../../actions/decks';
+import { darkBlue, lighterGray, getColor, background } from '../../utils/colors';
 import CustomTouchable from '../CustomTouchable';
 
 class NewCard extends Component {
@@ -14,7 +13,8 @@ class NewCard extends Component {
 
   submit = () => {
     const { question, answer } = this.state;
-    const { addDeck, navigation } = this.props;
+    const { addCard, navigation } = this.props;
+    const { id } = navigation.state.params;
 
     if (question.length === 0) {
       alert('Please fill question field')
@@ -26,24 +26,24 @@ class NewCard extends Component {
     }
 
     const card = { question, answer };
-    addDeck(id, card);
+    addCard(id, card);
     this.setState({ question: '', answer: '' });
     navigation.navigate('DeckDetails', { id })
   }
 
   render() {
     const { navigation } = this.props;
-    const { deckTitle } = navigation.state.params;
+    const { index, deckTitle } = navigation.state.params;
 
     return (
       <KeyboardAvoidingView style={styles.container}  behavior="padding">
-        <View style={styles.deck}>
-          <View style={styles.deckContent}>
-            <View style={[styles.deckBlock, styles.title]}>
-              <Text style={{fontWeight: 'bold', fontSize: 18}}>{deckTitle}</Text>
-              <Text style={{fontSize: 15, padding: 10}}>Insert this deck's new card details</Text>
+        <View style={[styles.card, {backgroundColor: getColor(index)}]}>
+          <View style={styles.cardContent}>
+            <View style={[styles.cardBlock, styles.title]}>
+              <Text style={styles.cardTitle}>{deckTitle}</Text>
+              <Text style={styles.cardSubtitle}>Insert this deck's new card details</Text>
             </View>
-            <View style={styles.deckBlock}>
+            <View style={styles.cardBlock}>
               <TextInput
                 style={styles.input}
                 placeholder={'Card Question'}
@@ -73,13 +73,13 @@ class NewCard extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: background,
   },
-  deck: {
+  card: {
     flexDirection: 'row',
     flex: .7,
     top: 30,
     marginHorizontal: 15,
-    backgroundColor: lighterBlue,
     borderRadius: 16,
     alignItems: 'center',
     elevation: 5,
@@ -87,15 +87,25 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
   },
-  deckContent: {
+  cardContent: {
     flex: 1,
     flexDirection: 'column',
     textAlign: 'center',
     paddingHorizontal: 15,
   },
-  deckBlock: {
+  cardBlock: {
     flex: 1,
     justifyContent: 'center',
+  },
+  cardTitle: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: lighterGray,
+  },
+  cardSubtitle: {
+    fontSize: 15,
+    padding: 10,
+    color: lighterGray,
   },
   input: {
     backgroundColor: 'white',
@@ -115,7 +125,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => {
   return {
-    addDeck : (id, deck) => dispatch(saveDeck(id, deck)),
+    addCard : (deckId, card) => dispatch(saveCardToDeck(deckId, card)),
   }
 }
 

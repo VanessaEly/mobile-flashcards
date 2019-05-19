@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { darkGray } from '../../utils/colors';
+import { lighterGray } from '../../utils/colors';
 
 const CardDetails = (props) => {
   const { onPress, cardText, buttonText, scaleX } = props;
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
   cardText: {
     fontSize: 18,
     textAlign: 'center',
+    color: lighterGray,
   },
   buttonContainer: {
     flex: 4,
@@ -49,14 +50,14 @@ const styles = StyleSheet.create({
     width: 24,
     flex: 1,
     maxWidth: 24,
-    color: darkGray,
+    color: 'black',
   },
   buttonText: {
     fontSize: 17,
     flex: 10,
     maxWidth: 130,
     paddingLeft: 5,
-    color: darkGray,
+    color: 'black',
   },
 });
 

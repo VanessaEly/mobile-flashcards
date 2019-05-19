@@ -162,3 +162,11 @@ export const removeDeckById = (key) => {
     AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
   });
 } 
+
+export function addCardToDeck(key, card) {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then((result) => {
+    const decks = JSON.parse(result);
+    decks[key].questions.push(card);
+    AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks));
+  });
+}

@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Score from './Score';
 import Card from '../card/Card';
-import { darkBlue } from '../../utils/colors';
+import { darkBlue, background } from '../../utils/colors';
 
 class Quiz extends React.Component {
   state = {
@@ -68,7 +68,7 @@ class Quiz extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'transparent',
+    backgroundColor: background,
   },
   header: {
     marginTop: 5,

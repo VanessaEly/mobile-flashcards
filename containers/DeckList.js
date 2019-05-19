@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { getDecks } from '../actions/decks';
 import Header from '../components/Header';
 import DeckContent from '../components/deck/DeckContent';
+import { background } from '../utils/colors';
 
 class DeckList extends React.Component {
   // hiding the navigation header
@@ -53,10 +54,10 @@ class DeckList extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   contentContainer: {
     paddingTop: 5,
+    backgroundColor: background,
   },
 });
 

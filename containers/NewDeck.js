@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView  } from 'react-
 import { connect } from 'react-redux'
 import { saveDeck } from '../actions/decks';
 import { generateId } from '../utils/shared';
-import { lighterBlue, darkBlue } from '../utils/colors';
+import { lighterBlue, darkBlue, background } from '../utils/colors';
 import Header from '../components/Header';
 import CustomTouchable from '../components/CustomTouchable';
 
@@ -36,28 +36,30 @@ class NewDeckScreen extends Component {
     return (
       <View style={styles.container}>
         <Header />
-        <KeyboardAvoidingView style={styles.deck} behavior="padding">
-          <View style={styles.deckContent}>
-            <View style={[styles.deckBlock, styles.title]}>
-              <Text style={{fontWeight: 'bold', fontSize: 18}}>Create Deck</Text>
-              <Text style={{fontSize: 15, padding: 10}}>What is the title of your new deck?</Text>
+        <View style={styles.deckContainer}>
+          <KeyboardAvoidingView style={styles.deck} behavior="padding">
+            <View style={styles.deckContent}>
+              <View style={[styles.deckBlock, styles.title]}>
+                <Text style={{fontWeight: 'bold', fontSize: 18}}>Create Deck</Text>
+                <Text style={{fontSize: 15, padding: 10}}>What is the title of your new deck?</Text>
+              </View>
+              <View style={styles.deckBlock}>
+                <TextInput
+                  style={styles.input}
+                  placeholder={'Deck Title'}
+                  onChangeText={(text) => this.setState({ title: text })}
+                  value={this.state.title}
+                />
+              </View>
+              <View style={{flex: .4}}>
+                <CustomTouchable
+                backgroundColor={darkBlue}
+                onPress={this.submit}
+                title='Create Deck' />
+              </View>
             </View>
-            <View style={styles.deckBlock}>
-              <TextInput
-                style={styles.input}
-                placeholder={'Deck Title'}
-                onChangeText={(text) => this.setState({ title: text })}
-                value={this.state.title}
-              />
-            </View>
-            <View style={{flex: .4}}>
-              <CustomTouchable
-              backgroundColor={darkBlue}
-              onPress={this.submit}
-              title='Create Deck' />
-            </View>
-          </View>
-        </KeyboardAvoidingView>
+          </KeyboardAvoidingView>
+        </View>
       </View>
     )
   }
@@ -66,6 +68,10 @@ class NewDeckScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  deckContainer: {
+    flex: 1,
+    backgroundColor: background,
   },
   deck: {
     flexDirection: 'row',

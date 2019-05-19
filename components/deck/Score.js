@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Platform } from 'react-native';
 import * as Progress from 'react-native-progress';
-import { getColor, darkRed, lightBlue, darkBlue } from '../../utils/colors';
+import { getColor, darkRed, lightBlue, white, lighterGray } from '../../utils/colors';
 import CustomTouchable from '../CustomTouchable';
 
 export default class Card extends React.Component {
@@ -29,10 +29,10 @@ export default class Card extends React.Component {
               animated={true}
               progress={progress/100}
               showsText={true}
-              color={darkBlue}
+              color={white}
             />
-            <Text>Your score is {score}%</Text>
-            <Text>You got {displayText} answers right</Text>
+            <Text style={styles.text}>Your score is {score}%</Text>
+            <Text style={styles.text}>You got {displayText} answers right</Text>
           </View>
           <View style={styles.choices}>
             <CustomTouchable
@@ -79,4 +79,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+  text: {
+    color: lighterGray,
+  }
 });
