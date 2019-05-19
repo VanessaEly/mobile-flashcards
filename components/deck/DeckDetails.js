@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Platform, Alert } from 'react-native';
+import { StyleSheet, View, Text, Platform, Alert, Animated } from 'react-native';
 import { connect } from 'react-redux';
 import { getColor, darkGray, darkBlue, darkRed, lightBlue } from '../../utils/colors';
 import CustomTouchable from '../CustomTouchable';
 import { removeDeck } from '../../actions/decks';
 
 class DeckDetails extends Component {
+  state = {
+    bounceValue: new Animated.Value(0),
+  }
+  componentDidMount = () => {
+    const { bounceValue } = this.state;
+    Animated.timing(bounceValue, { duration: 800, toValue: 1 }).start();
+  }
   componentWillReceiveProps(nextProps){
     if(!nextProps.deck){
       this.props.navigation.goBack();
@@ -21,11 +28,12 @@ class DeckDetails extends Component {
   
   render() {
     const { deck, navigation } = this.props;
+    const { bounceValue } = this.state;
     const { id, index } = navigation.state.params;
 
     if(deck){
       return (
-        <View style={styles.container}>
+        <Animated.View style={[styles.container, { transform: [{ scale: bounceValue }] }]}>
           <View style={[styles.deck, {backgroundColor: getColor(index || 0)}]}>
             <Text style={styles.title}>{deck.title}</Text>
             <Text style={[styles.cardCount, {color: darkGray}]}>{deck.questions.length} cards</Text>
@@ -49,12 +57,12 @@ class DeckDetails extends Component {
             />
             <CustomTouchable
               backgroundColor={lightBlue}
-              onPress={() => navigation.navigate('AddCard', { id })}
+              onPress={() => navigation.navigate('NewCard', { id, deckTitle: deck.title })}
               title='Add Card'
               icon={Platform.OS === 'ios' ? 'ios-add' : 'md-add'}
             />
           </View>
-        </View>
+        </Animated.View>
       );
     }
     else {

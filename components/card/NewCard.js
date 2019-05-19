@@ -1,64 +1,71 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView  } from 'react-native'
 import { connect } from 'react-redux'
-import { saveDeck } from '../actions/decks';
-import { generateId } from '../utils/shared';
-import { lighterBlue, darkBlue } from '../utils/colors';
-import Header from '../components/Header';
-import CustomTouchable from '../components/CustomTouchable';
+import { saveDeck } from '../../actions/decks';
+import { generateId } from '../../utils/shared';
+import { lighterBlue, darkBlue } from '../../utils/colors';
+import CustomTouchable from '../CustomTouchable';
 
-class NewDeckScreen extends Component {
-  // static navigationOptions = getNavigationOptions('New Deck')
-  static navigationOptions = {
-    header: null,
-  };
+class NewCard extends Component {
   state = {
-    title: '',
+    question: '',
+    answer: ''
   }
 
   submit = () => {
-    const { title } = this.state;
+    const { question, answer } = this.state;
     const { addDeck, navigation } = this.props;
 
-    if (title.length === 0) {
-      alert('Please fill title field')
+    if (question.length === 0) {
+      alert('Please fill question field')
+      return;
+    }
+    if (answer.length === 0) {
+      alert('Please fill answer field')
       return;
     }
 
-    const deck = { title, questions: [] };
-    const id = generateId();
-    addDeck(id, deck);
-    this.setState({ title: '' });
+    const card = { question, answer };
+    addDeck(id, card);
+    this.setState({ question: '', answer: '' });
     navigation.navigate('DeckDetails', { id })
   }
 
   render() {
+    const { navigation } = this.props;
+    const { deckTitle } = navigation.state.params;
+
     return (
-      <View style={styles.container}>
-        <Header />
-        <KeyboardAvoidingView style={styles.deck} behavior="padding">
+      <KeyboardAvoidingView style={styles.container}  behavior="padding">
+        <View style={styles.deck}>
           <View style={styles.deckContent}>
             <View style={[styles.deckBlock, styles.title]}>
-              <Text style={{fontWeight: 'bold', fontSize: 18}}>Create Deck</Text>
-              <Text style={{fontSize: 15, padding: 10}}>What is the title of your new deck?</Text>
+              <Text style={{fontWeight: 'bold', fontSize: 18}}>{deckTitle}</Text>
+              <Text style={{fontSize: 15, padding: 10}}>Insert this deck's new card details</Text>
             </View>
             <View style={styles.deckBlock}>
               <TextInput
                 style={styles.input}
-                placeholder={'Deck Title'}
-                onChangeText={(text) => this.setState({ title: text })}
-                value={this.state.title}
+                placeholder={'Card Question'}
+                onChangeText={(text) => this.setState({ question: text })}
+                value={this.state.question}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder={'Card Answer'}
+                onChangeText={(text) => this.setState({ answer: text })}
+                value={this.state.answer}
               />
             </View>
-            <View style={{flex: .4}}>
+            <View style={{flex: .5}}>
               <CustomTouchable
               backgroundColor={darkBlue}
               onPress={this.submit}
-              title='Create Deck' />
+              title='Create Card' />
             </View>
           </View>
-        </KeyboardAvoidingView>
-      </View>
+        </View>
+      </KeyboardAvoidingView>
     )
   }
 }
@@ -69,7 +76,7 @@ const styles = StyleSheet.create({
   },
   deck: {
     flexDirection: 'row',
-    flex: .8,
+    flex: .7,
     top: 30,
     marginHorizontal: 15,
     backgroundColor: lighterBlue,
@@ -97,12 +104,11 @@ const styles = StyleSheet.create({
     height: 38,
     borderRadius: 4,
     paddingHorizontal: 15,
-    marginBottom: 20,
+    marginBottom: 5,
     textAlign: 'center',
   },
   title: {
     alignItems: 'center',
-    marginTop: 20,
     color: darkBlue,
   },
 })
@@ -113,4 +119,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(NewDeckScreen)
+export default connect(null, mapDispatchToProps)(NewCard)

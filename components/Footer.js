@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     }),
     alignItems: 'center',
     backgroundColor: '#fbfbfb',
-    paddingVertical: 10,
+    paddingVertical: 5,
   },
   footerText: {
     fontSize: 9,

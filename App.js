@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import store from './store'
 import CustomStatusBar from './components/CustomStatusBar';
 import AppNavigator from './navigation/AppNavigator';
-
+import Footer from './components/Footer';
 export default class App extends React.Component {
   state = {
     appLoaded: false,
@@ -28,6 +28,7 @@ export default class App extends React.Component {
             <CustomStatusBar backgroundColor='black' barStyle='light-content' />
             <AppNavigator />
           </View>
+          <Footer />
         </Provider>
       );
     }

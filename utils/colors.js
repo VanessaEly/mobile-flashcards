@@ -1,3 +1,4 @@
+export const lighterBlue = '#58a7dd';
 export const lightBlue = '#2f95dc';
 export const darkBlue = '#2652ba';
 export const lightGray = '#ccc';

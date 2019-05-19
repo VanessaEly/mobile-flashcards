@@ -3,7 +3,6 @@ import { ScrollView, StyleSheet, TouchableOpacity, FlatList, View, ActivityIndic
 import { connect } from 'react-redux'
 import { getDecks } from '../actions/decks';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
 import DeckContent from '../components/deck/DeckContent';
 
 class DeckList extends React.Component {
@@ -46,7 +45,6 @@ class DeckList extends React.Component {
             renderItem={this.renderItem}
           />
         </ScrollView>
-        <Footer />
       </View>
     );
   }

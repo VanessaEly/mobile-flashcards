@@ -6,6 +6,7 @@ import DeckList from '../containers/DeckList';
 import NewDeck from '../containers/NewDeck';
 import DeckDetails from '../components/deck/DeckDetails';
 import Quiz from '../components/deck/Quiz';
+import NewCard from '../components/card/NewCard';
 import { getNavigationOptions } from '../utils/shared';
 
 const DeckListStack = createStackNavigator({
@@ -17,6 +18,10 @@ const DeckListStack = createStackNavigator({
   Quiz: {
     screen: Quiz,
     navigationOptions: getNavigationOptions('Quiz'),
+  },
+  NewCard: {
+    screen: NewCard,
+    navigationOptions: getNavigationOptions('New Card'),
   }
 });
 
