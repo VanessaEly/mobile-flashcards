@@ -3,24 +3,30 @@ import { View, StyleSheet, Platform, Animated } from 'react-native';
 import { getColor, darkRed, lightBlue } from '../../utils/colors';
 import CustomTouchable from '../CustomTouchable';
 import CardDetails from './CardDetails';
-
+/**
+ * This component is used to display cards during the quiz
+ */
 export default class Card extends React.Component {
   state = {
     isFlipped: false,
     rotate: new Animated.Value(0),
   }
+  /**
+   * This function starts an animation responsible for flipping the current card.
+   * This is triggered whenever a quiz card is pressed
+   */
   flipCard = () => {
     const { isFlipped, rotate } = this.state;
 
     Animated.timing(rotate, {
       friction: 8,
-      tension: 50,
+      tension: 40,
       useNativeDriver: true,
       toValue: isFlipped ? 0 : 1,
     }).start();
 
     setTimeout(() => {
-      this.setState({isFlipped: !isFlipped})
+      this.setState({ isFlipped: !isFlipped })
     }, 10);
   }
   render() {

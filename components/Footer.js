@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, Platform } from 'react-native';
-
+/**
+ * Creating the app footer
+ */
 const Footer = () => {
   return (
     <View style={styles.container}>

@@ -5,22 +5,27 @@ import { saveCardToDeck } from '../../actions/decks';
 import { darkBlue, lighterGray, getColor, background } from '../../utils/colors';
 import CustomTouchable from '../CustomTouchable';
 
+/**
+ * This component is used to display the card creation page
+ */
 class NewCard extends Component {
   state = {
     question: '',
     answer: ''
   }
-
+  /**
+   * Checks if question and answer are filled and, if yes, submits the new card to the deck
+   */
   submit = () => {
     const { question, answer } = this.state;
     const { addCard, navigation } = this.props;
     const { id } = navigation.state.params;
 
-    if (question.length === 0) {
+    if (question.trim().length === 0) {
       alert('Please fill question field')
       return;
     }
-    if (answer.length === 0) {
+    if (answer.trim().length === 0) {
       alert('Please fill answer field')
       return;
     }

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { lightBlue, lightGray } from '../utils/colors';
-
+/**
+ * Creating the tab bar icon, used by our navigation bar
+ */
 export default class TabBarIcon extends React.Component {
   render() {
     return (

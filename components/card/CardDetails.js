@@ -2,7 +2,9 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { lighterGray } from '../../utils/colors';
-
+/**
+ * This component is used to display details the card content
+ */
 const CardDetails = (props) => {
   const { onPress, cardText, buttonText, scaleX } = props;
 

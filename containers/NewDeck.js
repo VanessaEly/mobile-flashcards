@@ -6,22 +6,25 @@ import { generateId } from '../utils/shared';
 import { lighterBlue, darkBlue, background } from '../utils/colors';
 import Header from '../components/Header';
 import CustomTouchable from '../components/CustomTouchable';
-
-class NewDeckScreen extends Component {
-  // static navigationOptions = getNavigationOptions('New Deck')
+/**
+ * COmponent that displays the screen used to create a new deck
+ */
+class NewDeck extends Component {
   static navigationOptions = {
     header: null,
   };
   state = {
     title: '',
   }
-
+  /**
+   * Validates if the deck title was field and, if yes, submits the new deck
+   */
   submit = () => {
     const { title } = this.state;
     const { addDeck, navigation } = this.props;
 
-    if (title.length === 0) {
-      alert('Please fill title field')
+    if (title.trim().length === 0) {
+      alert('Please fill the title field')
       return;
     }
 
@@ -36,8 +39,8 @@ class NewDeckScreen extends Component {
     return (
       <View style={styles.container}>
         <Header />
-        <View style={styles.deckContainer}>
-          <KeyboardAvoidingView style={styles.deck} behavior="padding">
+        <KeyboardAvoidingView style={styles.deckContainer} behavior="padding">
+          <View style={styles.deck} >
             <View style={styles.deckContent}>
               <View style={[styles.deckBlock, styles.title]}>
                 <Text style={{fontWeight: 'bold', fontSize: 18}}>Create Deck</Text>
@@ -58,8 +61,8 @@ class NewDeckScreen extends Component {
                 title='Create Deck' />
               </View>
             </View>
-          </KeyboardAvoidingView>
-        </View>
+          </View>
+        </KeyboardAvoidingView>
       </View>
     )
   }
@@ -119,4 +122,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(NewDeckScreen)
+export default connect(null, mapDispatchToProps)(NewDeck)

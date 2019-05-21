@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
-import { lightGray, purple } from '../utils/colors';
-
+/**
+ * Creating the app header
+ */
 const Header = () => {
   return (
     <View style={styles.container}>

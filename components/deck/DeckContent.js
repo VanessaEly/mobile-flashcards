@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { lighterGray, getColor } from '../../utils/colors';
-
+/**
+ * This component is used to display the content of a deck (title and number of cards)
+ */
 const DeckContent = (props) => {
   const { index, title, questions } = props;
 

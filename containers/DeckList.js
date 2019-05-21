@@ -5,7 +5,9 @@ import { getDecks } from '../actions/decks';
 import Header from '../components/Header';
 import DeckContent from '../components/deck/DeckContent';
 import { background } from '../utils/colors';
-
+/**
+ * Component used as the application's home page. This component lists all current decks,
+ */
 class DeckList extends React.Component {
   // hiding the navigation header
   static navigationOptions = {
@@ -57,6 +59,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingTop: 5,
+    flex: 1,
     backgroundColor: background,
   },
 });

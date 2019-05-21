@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Platform, Alert, Animated } from 'react-native';
 import { connect } from 'react-redux';
-import { getColor, lightGray, darkBlue, darkRed, lightBlue, background, lighterGray } from '../../utils/colors';
+import { getColor, darkBlue, darkRed, lightBlue, background, lighterGray } from '../../utils/colors';
 import CustomTouchable from '../CustomTouchable';
 import { removeDeck } from '../../actions/decks';
-
+/**
+ * This component is used to display details about a deck, including all functionalities
+ * related to it, like starting a quiz, removing a deck or adding a card
+ */
 class DeckDetails extends Component {
   state = {
     bounceValue: new Animated.Value(0),
@@ -18,6 +21,10 @@ class DeckDetails extends Component {
       this.props.navigation.goBack();
     }
   }
+  /**
+   * Function responsible for deleting a deck
+   * @param {string} id - id of the deck that is being deleted 
+   */
   handleDeleteDeck = id => {
     const { deleteDeck } = this.props;
     Alert.alert('Are you sure?', 'This action cannot be undone',
@@ -25,7 +32,6 @@ class DeckDetails extends Component {
       { cancelable: false },
     );
   }
-  
   render() {
     const { deck, navigation } = this.props;
     const { bounceValue } = this.state;
@@ -34,7 +40,7 @@ class DeckDetails extends Component {
     if(deck){
       return (
         <Animated.View style={[styles.container, { transform: [{ scale: bounceValue }] }]}>
-          <View style={[styles.deck, {backgroundColor: getColor(index || 0)}]}>
+          <View style={[styles.deck, {backgroundColor: getColor(index)}]}>
             <Text style={styles.title}>{deck.title}</Text>
             <Text style={[styles.cardCount]}>{deck.questions.length} cards</Text>
             <View style={[styles.buttonContainer, {flex: .1}]}>

@@ -4,8 +4,10 @@ import * as Progress from 'react-native-progress';
 import { getColor, darkRed, lightBlue, white, lighterGray } from '../../utils/colors';
 import { clearLocalNotification, setLocalNotification } from '../../utils/notification';
 import CustomTouchable from '../CustomTouchable';
-
-export default class Card extends React.Component {
+/**
+ * This component is used to display the user score at the end of each quiz
+ */
+export default class Score extends React.Component {
   state = {
     progress: 0,
   }
@@ -25,32 +27,30 @@ export default class Card extends React.Component {
 
     return (
       <View style={styles.cardContainer}>  
-        {/* <View style={styles.scoreContainer}> */}
-          <View style={[styles.score, {backgroundColor: getColor(deckIndex)}]}>
-            <Progress.Circle
-              size={100}
-              formatText={() => `${score}%`}
-              animated={true}
-              progress={progress/100}
-              showsText={true}
-              color={white}
-            />
-            <Text style={styles.text}>Your score is {score}%</Text>
-            <Text style={styles.text}>You got {displayText} answers right</Text>
-          </View>
-          <View style={styles.choices}>
-            <CustomTouchable
-              backgroundColor={darkRed}
-              onPress={()=> {navigation.goBack()}}
-              title='Back to Deck'
-              icon={Platform.OS === 'ios' ? 'ios-close' : 'md-close'} />
-            <CustomTouchable
-              backgroundColor={lightBlue}
-              onPress={onRestart}
-              title='Restart Quiz'
-              icon={Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark'} />
-          </View>
-        {/* </View> */}
+        <View style={[styles.score, {backgroundColor: getColor(deckIndex)}]}>
+          <Progress.Circle
+            size={100}
+            formatText={() => `${score}%`}
+            animated={true}
+            progress={progress/100}
+            showsText={true}
+            color={white}
+          />
+          <Text style={styles.text}>Your score is {score}%</Text>
+          <Text style={styles.text}>You got {displayText} answers right</Text>
+        </View>
+        <View style={styles.choices}>
+          <CustomTouchable
+            backgroundColor={darkRed}
+            onPress={()=> {navigation.goBack()}}
+            title='Back to Deck'
+            icon={Platform.OS === 'ios' ? 'ios-close' : 'md-close'} />
+          <CustomTouchable
+            backgroundColor={lightBlue}
+            onPress={onRestart}
+            title='Restart Quiz'
+            icon={Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark'} />
+        </View>
       </View>
     );
   }

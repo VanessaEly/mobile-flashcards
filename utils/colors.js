@@ -9,9 +9,12 @@ export const purple = '#292477';
 export const white = '#fff';
 export const darkRed = '#d94c4e';
 
-
 const colors = [
   '#1b75be', '#408ee0', '#4572AA', '#779ECF', '#89bff8', '#A0CFDF', '#3A92AF', '#056687', '#0051a2', 
 ];
 
-export const getColor = (index) => colors[index % 10];
+/**
+ * getting a color from the list based on the index that was passed
+ * @param {Number} index - index that is being used
+ */
+export const getColor = (index) => index ? colors[index % 10] : colors[0];

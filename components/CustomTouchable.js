@@ -2,7 +2,9 @@ import React from 'react';
 import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { white, purple } from '../utils/colors';
-
+/**
+ * Adding a custom touchable button, whit custom properties passed as props
+ */
 const CustomTouchable = (props) => {
   const { backgroundColor, color, onPress, title, icon } = props;
   return (
