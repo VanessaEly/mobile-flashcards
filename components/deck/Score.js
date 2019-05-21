@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Platform } from 'react-native';
 import * as Progress from 'react-native-progress';
 import { getColor, darkRed, lightBlue, white, lighterGray } from '../../utils/colors';
+import { clearLocalNotification, setLocalNotification } from '../../utils/notification';
 import CustomTouchable from '../CustomTouchable';
 
 export default class Card extends React.Component {
@@ -10,6 +11,9 @@ export default class Card extends React.Component {
   }
   componentDidMount() {
     const { score } = this.props;
+    // clearing today's notification and setting a new one fro tomorrow
+    clearLocalNotification()
+      .then(setLocalNotification);
 
     setTimeout(() => {
       this.setState({ progress: score })

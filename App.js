@@ -6,11 +6,15 @@ import store from './store'
 import CustomStatusBar from './components/CustomStatusBar';
 import AppNavigator from './navigation/AppNavigator';
 import Footer from './components/Footer';
+import { setLocalNotification } from './utils/notification';
+
 export default class App extends React.Component {
   state = {
     appLoaded: false,
   };
-
+  componentDidMount() {
+    setLocalNotification();
+  }
   render() {
     const { appLoaded } = this.state;
 
