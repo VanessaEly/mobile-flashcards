@@ -17,9 +17,12 @@ This app allows users to create different categories of flashcards called "decks
   npm start
 ```
 
-### Stack
+### Technologies used
 - React
 - React Native
 - Redux
 - Redux Thunk
 - Expo
+
+### Platforms tested
+- Android

@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Mobile Flashcards",
+    "description": "Create custom decks, add cards and answer your own quizzes",
     "slug": "mobile-flashcards",
     "privacy": "public",
     "sdkVersion": "32.0.0",
@@ -23,7 +24,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": true,
+      "bundleIdentifier": "org.mobileflashcards.exp"
+     },
+     "android": {
+      "package": "org.mobileflashcards.exp"
+     }
   }
 }
